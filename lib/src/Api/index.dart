@@ -4,11 +4,10 @@ import 'dart:convert';
 dynamic login(String company, String email, String password) async {
   print('start response');
   dynamic response = await getTocket(company, email, password);
-  // String _accessTocken = response.body.access_token;
   dynamic decodeResponceData = json.decode(response.body);
-  print('Response access_tocken: ${decodeResponceData['access_token']}');
+  print('Response access_tocken: $decodeResponceData');
   if (response.statusCode == 200) {
-    return true;
+    return decodeResponceData['access_token'];
   }
   return false;
 }
