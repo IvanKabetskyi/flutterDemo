@@ -99,7 +99,6 @@ class _InputContainerState extends State<InputContainer>
       _controller.reverse();
     } else {
       _controllerBackground.reverse();
-      print('${widget.myController.text.length} ${widget.myController.text}');
       if (widget.myController.text.length != 0) {
         _controller.forward();
       }
@@ -142,7 +141,6 @@ class _InputContainerState extends State<InputContainer>
                         size: 18,
                       ),
                       onPressed: () {
-                        print('Press eye');
                         setState(() {
                           obscureText = !obscureText;
                           suffixIcon = obscureText

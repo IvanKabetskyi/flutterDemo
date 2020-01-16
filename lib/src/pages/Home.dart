@@ -14,9 +14,17 @@ class HomePage extends StatelessWidget {
       key: _homeKey,
       body: Center(
           child: RaisedButton(
-        child: StoreConnector<AppState, String>(
-            converter: (store) => store.state.token,
-            builder: (context, token) => Text('Go to chat Screen $token')),
+        child: StoreConnector<AppState, dynamic>(
+            converter: (store) => {
+                  'accessToken': store.state.accessToken.toString(),
+                  'refreshToken': store.state.accessToken.toString()
+                },
+            builder: (context, tokens) => Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Text('accessToken: ${tokens["accessToken"]}'),
+                      Text('refreshToken: ${tokens["refreshToken"]}')
+                    ])),
         onPressed: () {
           Navigator.pushNamed(context, '/chat');
         },

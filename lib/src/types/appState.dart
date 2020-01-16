@@ -1,6 +1,6 @@
 class AppStateType {
   final String type;
-  final String token;
+  final dynamic value;
 
-  AppStateType({this.type, this.token});
+  AppStateType({this.type, this.value});
 }

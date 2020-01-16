@@ -1,12 +1,17 @@
 class AppState {
-  final String token;
+  final String accessToken;
+  final String refreshToken;
 
-  AppState({this.token});
+  AppState({this.accessToken, this.refreshToken});
 
-  AppState copyWith({String token}) => AppState(token: token ?? this.token);
+  AppState copyWith({String accessToken, String refreshToken}) => AppState(
+      accessToken: accessToken ?? this.accessToken,
+      refreshToken: refreshToken ?? this.refreshToken);
 
-  static AppState fromJson(dynamic json) =>
-      AppState(token: json["token"] as String);
+  static AppState fromJson(dynamic json) => AppState(
+      accessToken: json["accessToken"] as String,
+      refreshToken: json["refreshToken"] as String);
 
-  dynamic toJson() => {'token': token};
+  dynamic toJson() =>
+      {'accessToken': accessToken, 'refreshToken': refreshToken};
 }

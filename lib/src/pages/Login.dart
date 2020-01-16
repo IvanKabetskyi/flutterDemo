@@ -70,7 +70,7 @@ class LoginPageState extends State<LoginPage> {
                             icon: Icons.contact_mail,
                             errMessage: companyError,
                             validation: companyValidation,
-                            maxlength: 2),
+                            maxlength: 3),
                         InputContainer(
                             key: Key('Email'),
                             myController: email,

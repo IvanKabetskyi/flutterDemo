@@ -5,8 +5,10 @@ AppState reducer(AppState state, dynamic action) {
   switch (action.type) {
     case 'ADD_TOKEN':
       {
-        print('AppState reducer ${action.token}');
-        return state.copyWith(token: action.token);
+        print('AppState reducer ${action.value}');
+        return state.copyWith(
+            accessToken: action.value['access_token'],
+            refreshToken: action.value['refresh_token']);
       }
     default:
       break;
