@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:my_app/src/actions/appState.dart';
+import 'package:my_app/src/models/app_state.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import './../components/Drawer.dart';
 
 import './../components/Input.dart';
-
-import 'package:my_app/src/Api/index.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -37,131 +38,137 @@ class LoginPageState extends State<LoginPage> {
                 image: AssetImage('images/bg_pic_login.png'),
                 fit: BoxFit.cover),
           ),
-          child: Column(mainAxisAlignment: MainAxisAlignment.center, children: <
-              Widget>[
-            Expanded(
-              child: Container(),
-            ),
-            FractionallySizedBox(
-              widthFactor: 0.85,
-              child: Container(
-                height: 70.0,
-                decoration: BoxDecoration(
-                    image: DecorationImage(
-                        image: AssetImage('images/logo.png'),
-                        fit: BoxFit.cover)),
-              ),
-            ),
-            SizedBox(
-              height: 30,
-            ),
-            FractionallySizedBox(
-              widthFactor: .8,
-              child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    InputContainer(
-                        key: Key('Company'),
-                        myController: company,
-                        title: 'Company',
-                        icon: Icons.contact_mail,
-                        errMessage: companyError,
-                        validation: companyValidation,
-                        maxlength: 2),
-                    InputContainer(
-                        key: Key('Email'),
-                        myController: email,
-                        title: 'Email',
-                        icon: Icons.email,
-                        errMessage: emailError,
-                        validation: emailValidation,
-                        keyboardType: TextInputType.emailAddress),
-                    InputContainer(
-                        key: Key('Password'),
-                        myController: password,
-                        title: 'Password',
-                        icon: Icons.lock,
-                        obscureText: true,
-                        errMessage: pwdError,
-                        validation: pwdValidation),
-                    SizedBox(
-                      height: 10.0,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
-                      child: Wrap(
-                        runSpacing: 4.0,
-                        children: <Widget>[
-                          Text(
-                            'By signing in, you agree to the ',
-                            style: TextStyle(
-                                color: Color(0xFFB0BEC5), fontSize: 14),
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Expanded(
+                  child: Container(),
+                ),
+                FractionallySizedBox(
+                  widthFactor: 0.85,
+                  child: Container(
+                    height: 70.0,
+                    decoration: BoxDecoration(
+                        image: DecorationImage(
+                            image: AssetImage('images/logo.png'),
+                            fit: BoxFit.cover)),
+                  ),
+                ),
+                SizedBox(
+                  height: 30,
+                ),
+                FractionallySizedBox(
+                  widthFactor: .8,
+                  child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        InputContainer(
+                            key: Key('Company'),
+                            myController: company,
+                            title: 'Company',
+                            icon: Icons.contact_mail,
+                            errMessage: companyError,
+                            validation: companyValidation,
+                            maxlength: 2),
+                        InputContainer(
+                            key: Key('Email'),
+                            myController: email,
+                            title: 'Email',
+                            icon: Icons.email,
+                            errMessage: emailError,
+                            validation: emailValidation,
+                            keyboardType: TextInputType.emailAddress),
+                        InputContainer(
+                            key: Key('Password'),
+                            myController: password,
+                            title: 'Password',
+                            icon: Icons.lock,
+                            obscureText: true,
+                            errMessage: pwdError,
+                            validation: pwdValidation),
+                        SizedBox(
+                          height: 10.0,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          child: Wrap(
+                            runSpacing: 4.0,
+                            children: <Widget>[
+                              Text(
+                                'By signing in, you agree to the ',
+                                style: TextStyle(
+                                    color: Color(0xFFB0BEC5), fontSize: 14),
+                              ),
+                              InkWell(
+                                child: Text(
+                                  'private police.',
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      decoration: TextDecoration.underline,
+                                      fontSize: 14),
+                                ),
+                                onTap: _launchPrivatePolice,
+                              )
+                            ],
                           ),
-                          InkWell(
-                            child: Text(
-                              'private police.',
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  decoration: TextDecoration.underline,
-                                  fontSize: 14),
+                        ),
+                        SizedBox(
+                          height: 30,
+                        ),
+                        StoreConnector<AppState, Function>(
+                          converter: (store) {
+                            return (company, email, password, context) =>
+                                store.dispatch(setAccessToken(
+                                    company, email, password, context));
+                          },
+                          builder: (_, login) => RawMaterialButton(
+                            fillColor: Color(0xFF28bbff),
+                            splashColor: Color(0xFF0386d2),
+                            shape: RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(8.0))),
+                            child: Container(
+                              height: 60,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(6),
+                                ),
+                              ),
+                              child: Center(
+                                child: Text(
+                                  'Log In',
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 20),
+                                ),
+                              ),
                             ),
-                            onTap: _launchPrivatePolice,
-                          )
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      height: 30,
-                    ),
-                    RawMaterialButton(
-                      fillColor: Color(0xFF28bbff),
-                      splashColor: Color(0xFF0386d2),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(8.0))),
-                      child: Container(
-                        height: 60,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(6),
+                            onPressed: () async {
+                              print('RawMaterialButton pressed');
+                              login(company.text, email.text, password.text,
+                                  context);
+                            },
                           ),
                         ),
-                        child: Center(
-                          child: Text(
-                            'Log In',
-                            style: TextStyle(color: Colors.white, fontSize: 20),
-                          ),
-                        ),
-                      ),
-                      onPressed: () async {
-                        print('RawMaterialButton pressed');
-                        bool resultLogin = await login(
-                            company.text, email.text, password.text);
-                        print(resultLogin);
-                        if (resultLogin) {
-                          Navigator.pushNamed(context, '/home');
-                        }
-                      },
-                    ),
-                  ]),
-            ),
-            Expanded(
-              child: Container(),
-            ),
-            Column(children: <Widget>[
-              Text(
-                'Powered by Rhino Technologies',
-                style: TextStyle(color: Color(0xFFB0BEC5)),
-              ),
-              Text(
-                'version 1.20.8-testing',
-                style: TextStyle(color: Color(0xFFB0BEC5), fontSize: 11),
-              ),
-              SizedBox(
-                height: 20,
-              )
-            ]),
-          ]),
+                      ]),
+                ),
+                Expanded(
+                  child: Container(),
+                ),
+                Column(children: <Widget>[
+                  Text(
+                    'Powered by Rhino Technologies',
+                    style: TextStyle(color: Color(0xFFB0BEC5)),
+                  ),
+                  Text(
+                    'version 1.20.8-testing',
+                    style: TextStyle(color: Color(0xFFB0BEC5), fontSize: 11),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  )
+                ]),
+              ]),
         ),
       ),
       drawer: DrawerComponent(),

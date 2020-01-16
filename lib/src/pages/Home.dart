@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:my_app/src/models/app_state.dart';
 
 import './../components/Drawer.dart';
 
@@ -12,7 +14,9 @@ class HomePage extends StatelessWidget {
       key: _homeKey,
       body: Center(
           child: RaisedButton(
-        child: Text('Go to chat Screen'),
+        child: StoreConnector<AppState, String>(
+            converter: (store) => store.state.token,
+            builder: (context, token) => Text('Go to chat Screen $token')),
         onPressed: () {
           Navigator.pushNamed(context, '/chat');
         },
