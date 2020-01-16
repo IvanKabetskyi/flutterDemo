@@ -9,6 +9,8 @@ import './src/pages/Chat.dart';
 
 import './src/pages/Login.dart';
 
+import './src/pages/Splash.dart';
+
 void main() {
   FlutterError.onError = (FlutterErrorDetails details) {
     FlutterError.dumpErrorToConsole(details);
@@ -23,11 +25,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       routes: {
-        '/': (context) => HomePage(),
+        '/': (context) => Splash(),
         '/chat': (context) => ChatPage(),
-        '/login': (context) => LoginPage()
+        '/login': (context) => LoginPage(),
+        '/home': (context) => HomePage()
       },
-      // home: DrawerComponent(),
     );
   }
 }

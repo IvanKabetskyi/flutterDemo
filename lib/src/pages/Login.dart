@@ -5,6 +5,8 @@ import './../components/Drawer.dart';
 
 import './../components/Input.dart';
 
+import 'package:my_app/src/Api/index.dart';
+
 class LoginPage extends StatefulWidget {
   @override
   LoginPageState createState() => LoginPageState();
@@ -131,8 +133,14 @@ class LoginPageState extends State<LoginPage> {
                           ),
                         ),
                       ),
-                      onPressed: () {
+                      onPressed: () async {
                         print('RawMaterialButton pressed');
+                        bool resultLogin = await login(
+                            company.text, email.text, password.text);
+                        print(resultLogin);
+                        if (resultLogin) {
+                          Navigator.pushNamed(context, '/home');
+                        }
                       },
                     ),
                   ]),
