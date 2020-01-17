@@ -24,4 +24,6 @@ class Api {
         headers: {HttpHeaders.authorizationHeader: 'Bearer $accessToken'});
     return response;
   }
+
+  /// me request url: https://tms-dev.rhinocodes.com/api/drivers/me
 }
