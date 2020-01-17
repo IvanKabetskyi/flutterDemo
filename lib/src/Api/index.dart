@@ -1,21 +1,10 @@
+import 'dart:io';
+
 import 'package:http/http.dart' as http;
-import 'dart:convert';
 
 class Api {
-  dynamic login(String company, String email, String password) async {
-    print('start response');
-    dynamic response = await getTocket(company, email, password);
-    dynamic decodeResponceData = json.decode(response.body);
-    print('Response access_tocken: $decodeResponceData');
-    if (response.statusCode == 200) {
-      return decodeResponceData;
-    }
-    return false;
-  }
-
-// List<> apiToken (String company, String email, String password) async {
   dynamic getTocket(String company, String email, String password) async {
-    final response = await http.post(
+    http.Response response = await http.post(
         'https://tms-dev.rhinocodes.com/api/public/oauth/v2/token',
         body: {
           'company': company,
@@ -28,5 +17,11 @@ class Api {
     return response;
   }
 
-  dynamic getCurrentCarrier() async {}
+  dynamic getCurrentCarrier(String accessToken) async {
+    String url = 'https://tms-dev.rhinocodes.com/api/carriers/current';
+
+    http.Response response = await http.get(url,
+        headers: {HttpHeaders.authorizationHeader: 'Bearer $accessToken'});
+    return response;
+  }
 }

@@ -4,8 +4,6 @@ import 'package:my_app/src/actions/appState.dart';
 import 'package:my_app/src/models/app_state.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import './../components/Drawer.dart';
-
 import './../components/Input.dart';
 
 class LoginPage extends StatefulWidget {
@@ -47,11 +45,11 @@ class LoginPageState extends State<LoginPage> {
                 FractionallySizedBox(
                   widthFactor: 0.85,
                   child: Container(
-                    height: 70.0,
+                    height: 70,
                     decoration: BoxDecoration(
                         image: DecorationImage(
                             image: AssetImage('images/logo.png'),
-                            fit: BoxFit.cover)),
+                            fit: BoxFit.contain)),
                   ),
                 ),
                 SizedBox(
@@ -144,7 +142,6 @@ class LoginPageState extends State<LoginPage> {
                               ),
                             ),
                             onPressed: () async {
-                              print('RawMaterialButton pressed');
                               login(company.text, email.text, password.text,
                                   context);
                             },
@@ -171,7 +168,6 @@ class LoginPageState extends State<LoginPage> {
               ]),
         ),
       ),
-      drawer: DrawerComponent(),
     );
   }
 
