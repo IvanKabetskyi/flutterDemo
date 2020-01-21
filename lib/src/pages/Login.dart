@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_redux/flutter_redux.dart';
-import 'package:my_app/src/actions/appState.dart';
-import 'package:my_app/src/models/app_state.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:my_app/src/block/carrier/app_state_bloc.dart';
+import 'package:my_app/src/block/carrier/app_state_event.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import './../components/Input.dart';
@@ -12,6 +12,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class LoginPageState extends State<LoginPage> {
+  AppBloc appBloc;
   final company = TextEditingController();
   final email = TextEditingController();
   final password = TextEditingController();
@@ -22,6 +23,7 @@ class LoginPageState extends State<LoginPage> {
   @override
   void initState() {
     super.initState();
+    appBloc = BlocProvider.of<AppBloc>(context);
   }
 
   @override
@@ -118,38 +120,34 @@ class LoginPageState extends State<LoginPage> {
                           SizedBox(
                             height: 30,
                           ),
-                          StoreConnector<AppState, Function>(
-                            converter: (store) {
-                              return (company, email, password, context) =>
-                                  store.dispatch(setAccessToken(
-                                      company, email, password, context));
-                            },
-                            builder: (_, login) => RawMaterialButton(
-                              fillColor: Color(0xFF28bbff),
-                              splashColor: Color(0xFF0386d2),
-                              shape: RoundedRectangleBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(8.0))),
-                              child: Container(
-                                height: 60,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.all(
-                                    Radius.circular(6),
-                                  ),
-                                ),
-                                child: Center(
-                                  child: Text(
-                                    'Log In',
-                                    style: TextStyle(
-                                        color: Colors.white, fontSize: 20),
-                                  ),
+                          RawMaterialButton(
+                            fillColor: Color(0xFF28bbff),
+                            splashColor: Color(0xFF0386d2),
+                            shape: RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(8.0))),
+                            child: Container(
+                              height: 60,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(6),
                                 ),
                               ),
-                              onPressed: () async {
-                                login(company.text, email.text, password.text,
-                                    context);
-                              },
+                              child: Center(
+                                child: Text(
+                                  'Log In',
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 20),
+                                ),
+                              ),
                             ),
+                            onPressed: () async {
+                              appBloc.add(FetchLogin(
+                                  company: company.text,
+                                  email: email.text,
+                                  password: password.text,
+                                  context: context));
+                            },
                           ),
                         ]),
                   ),

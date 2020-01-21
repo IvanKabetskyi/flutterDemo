@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:http/http.dart' as http;
 
 class Api {
-  dynamic getTocket(String company, String email, String password) async {
+  dynamic getToken(String company, String email, String password) async {
     http.Response response = await http.post(
         'https://tms-dev.rhinocodes.com/api/public/oauth/v2/token',
         body: {
