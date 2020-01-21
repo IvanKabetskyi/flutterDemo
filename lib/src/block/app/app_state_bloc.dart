@@ -1,22 +1,43 @@
 import 'dart:async';
 
-import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:my_app/src/Modal/modal.dart';
 
-import 'package:my_app/src/block/carrier/app_state.dart';
-import 'package:my_app/src/block/carrier/app_state_event.dart';
-import 'package:my_app/src/data/models/app_state.dart';
-import 'package:my_app/src/data/repositories/carrier_repositories.dart';
+import 'package:my_app/src/block/app/app_state.dart';
+import 'package:my_app/src/block/app/app_state_event.dart';
+import 'package:my_app/src/data/models/AppState/app_state.dart';
+import 'package:my_app/src/data/repositories/app_repositories.dart';
 
-class AppBloc extends Bloc<AppEvent, AppState> {
+class AppBloc extends HydratedBloc<AppEvent, AppState> {
+  @override
+  AppState fromJson(Map<String, dynamic> json) {
+    try {
+      final appState = AppState.fromJson(json);
+
+      return appState;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  @override
+  Map<String, dynamic> toJson(AppState state) {
+    if (state is AppState) {
+      return state.toJson();
+    } else {
+      return null;
+    }
+  }
+
   AppRepository repository;
 
   AppBloc({@required this.repository});
 
   @override
-  AppState get initialState => AppInitialState();
+  AppState get initialState {
+    return super.initialState ?? AppInitialState();
+  }
 
   @override
   Stream<AppState> mapEventToState(AppEvent event) async* {
@@ -33,6 +54,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
         });
 
         print(appState.accessToken);
+        yield AppLoadedState(appState: appState);
         yield appState;
         Navigator.of(event.context).pushNamed('/home');
       } catch (e) {

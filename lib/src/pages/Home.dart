@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:my_app/src/block/carrier/app_state.dart';
-import 'package:my_app/src/block/carrier/app_state_bloc.dart';
-import 'package:my_app/src/block/carrier/app_state_event.dart';
-import 'package:my_app/src/data/models/app_state.dart';
+import 'package:my_app/src/block/app/app_state.dart';
+import 'package:my_app/src/block/app/app_state_bloc.dart';
+import 'package:my_app/src/block/app/app_state_event.dart';
+import 'package:my_app/src/data/models/AppState/app_state.dart';
 
 import './../components/Drawer.dart';
 

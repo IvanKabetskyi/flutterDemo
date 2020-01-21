@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:my_app/src/block/carrier/app_state_bloc.dart';
-import 'package:my_app/src/block/carrier/app_state_event.dart';
+import 'package:my_app/src/block/app/app_state_bloc.dart';
+import 'package:my_app/src/block/app/app_state_event.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import './../components/Input.dart';

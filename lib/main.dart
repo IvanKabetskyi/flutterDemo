@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:my_app/src/block/carrier/app_state_bloc.dart';
-import 'package:my_app/src/data/repositories/carrier_repositories.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:my_app/src/block/app/app_state_bloc.dart';
+import 'package:my_app/src/data/repositories/app_repositories.dart';
 
 import './src/pages/Home.dart';
 
@@ -14,6 +15,8 @@ import './src/pages/Login.dart';
 import './src/pages/Splash.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  BlocSupervisor.delegate = await HydratedBlocDelegate.build();
   runApp(MyApp());
 }
 

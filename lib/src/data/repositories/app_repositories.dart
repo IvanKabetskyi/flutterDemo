@@ -3,8 +3,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 
 import 'package:my_app/src/Api/index.dart';
-import 'package:my_app/src/data/models/app_state.dart';
-import 'package:my_app/src/data/models/current_carrier.dart';
+import 'package:my_app/src/data/models/AppState/app_state.dart';
+import 'package:my_app/src/data/models/Carrier/current_carrier.dart';
 
 dynamic http = new Api();
 
